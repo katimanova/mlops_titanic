@@ -14,9 +14,12 @@ readme = "README.md"
 license = {text = "MIT"}
 
 
+
 [tool.pdm]
 distribution = true
 
+[tool.pdm.venv]
+in-project = true
 [dependency-groups]
 dev = [
     "black>=25.1.0",
@@ -31,6 +34,3 @@ dev = [
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
-
-[tool.pdm.venv]
-in-project = true

@@ -29,7 +29,7 @@ jobs:
       run: |
         pdm run black --check src tests
         pdm run flake8 src tests
-        pdm run ruff src tests
+        pdm run ruff check src tests
         pdm run mypy src
 
     - name: Build Docker image
