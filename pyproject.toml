@@ -1,0 +1,36 @@
+[project]
+name = "mlops_titanic"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Anastasia K.", email = "nkaliman00@mail.ru"},
+]
+dependencies = [
+    "pandas>=2.2.3",
+    "scikit-learn>=1.6.1",
+]
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = true
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "isort>=6.0.1",
+    "flake8>=7.2.0",
+    "mypy>=1.15.0",
+    "ruff>=0.11.7",
+    "pre-commit>=4.2.0",
+    "nbqa>=1.9.1",
+]
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm.venv]
+in-project = true
