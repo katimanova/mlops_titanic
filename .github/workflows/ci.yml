@@ -55,3 +55,28 @@ jobs:
         IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/mlops-titanic:latest
         docker build -t $IMAGE_NAME .
         docker push $IMAGE_NAME
+
+  deploy-docs:
+    needs: test-and-build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload docs artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: docs
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
