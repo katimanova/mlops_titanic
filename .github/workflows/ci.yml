@@ -70,13 +70,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Install Pandoc
+        run: sudo apt-get update && sudo apt-get install -y pandoc
+
+      - name: Convert Markdown to HTML
+        run: |
+          mkdir -p docs_html
+          pandoc docs/index.md -o docs_html/index.html
+
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
-      - name: Upload docs artifact
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: docs
+          path: docs_html
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
