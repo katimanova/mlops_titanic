@@ -44,22 +44,14 @@ jobs:
       packages: write
 
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.10"
+    - name: Log in to GitHub Container Registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-    - name: Install PDM
-      run: pip install pdm
-
-    - name: Install dependencies
-      run: pdm install
-
-    - name: Build Python package
-      run: pdm build
-
-    - name: Publish Python package to GitHub Packages
-      run: pdm publish --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
+    - name: Build and push Docker image
+      run: |
+        IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/mlops-titanic:latest
+        docker build -t $IMAGE_NAME .
+        docker push $IMAGE_NAME
