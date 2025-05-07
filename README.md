@@ -51,7 +51,7 @@ docker run --rm mlops-titanic
 # Инициализация DVC
 dvc init
 
-# Добавление данных
+# Добавление сырых данных
 dvc add data/raw/
 
 # Добавление .dvc-файлов и игнорирования в Git
