@@ -35,3 +35,41 @@ docker build -t mlops-titanic .
 ```bash
 docker run --rm mlops-titanic
 ```
+
+### Data Versioning with DVC + DAGsHub
+
+В этом проекте используется [DVC](https://dvc.org/) для отслеживания данных и моделей. DVC позволяет:
+
+- добавлять данные в репозиторий без хранения их в Git;
+- отслеживать изменения в датасетах;
+- переключаться между версиями;
+- синхронизировать данные с удалённым хранилищем (в нашем случае — [DAGsHub](https://dagshub.com)).
+
+#### Используемые команды
+
+```bash
+# Инициализация DVC
+dvc init
+
+# Добавление данных
+dvc add data/raw/
+
+# Добавление .dvc-файлов и игнорирования в Git
+git add data/raw/*.dvc .gitignore
+
+# Настройка удалённого хранилища (DAGsHub)
+dvc remote add -d origin-dags https://dagshub.com/katimanova/mlops_titanic.dvc
+dvc remote modify origin-dags --local auth basic
+dvc remote modify origin-dags --local user katimanova
+dvc remote modify origin-dags --local password <DAGsHub токен>
+
+# Загрузка данных в удалённое хранилище
+dvc push
+
+# Восстановление данных из удалённого хранилища
+dvc pull
+
+# Переключение между версиями данных
+git checkout <branch-or-commit>
+dvc checkout
+```

@@ -36,6 +36,7 @@ dev = [
     "pre-commit>=4.2.0",
     "nbqa>=1.9.1",
     "dvc>=3.59.2",
+    "dvc-gdrive>=3.0.1",
 ]
 
 [build-system]
