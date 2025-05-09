@@ -22,8 +22,8 @@ jobs:
     - name: Install PDM
       run: pip install pdm
 
-    - name: Install dependencies (with dev)
-      run: pdm install --dev
+    - name: Install dependencies
+      run: pdm install
 
     - name: Run linters
       run: |
