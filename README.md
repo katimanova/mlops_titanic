@@ -35,3 +35,62 @@ docker build -t mlops-titanic .
 ```bash
 docker run --rm mlops-titanic
 ```
+
+### Data Versioning with DVC + DAGsHub
+
+В этом проекте используется [DVC](https://dvc.org/) для отслеживания данных и моделей. DVC позволяет:
+
+- добавлять данные в репозиторий без хранения их в Git;
+- отслеживать изменения в датасетах;
+- переключаться между версиями;
+- синхронизировать данные с удалённым хранилищем (в нашем случае — [DAGsHub](https://dagshub.com/katimanova/mlops_titanic)).
+
+#### Используемые команды
+
+```bash
+# Инициализация DVC
+dvc init
+
+# Добавление сырых данных
+dvc add data/raw/
+
+# Добавление .dvc-файлов и игнорирования в Git
+git add data/raw/*.dvc .gitignore
+
+# Настройка удалённого хранилища (DAGsHub)
+dvc remote add -d origin-dags https://dagshub.com/katimanova/mlops_titanic.dvc
+dvc remote modify origin-dags --local auth basic
+dvc remote modify origin-dags --local user katimanova
+dvc remote modify origin-dags --local password <DAGsHub токен>
+
+# Загрузка данных в удалённое хранилище
+dvc push
+
+# Восстановление данных из удалённого хранилища
+dvc pull
+
+# Переключение между версиями данных
+git checkout <branch-or-commit>
+dvc checkout
+```
+
+### Сравнение моделей по точности 
+
+Модели обучались как на сырых, так и на предобработанных данных:
+
+```bash
+logistic_regression_raw        accuracy: 0.9833
+logistic_regression_processed  accuracy: 0.9306
+naive_bayes_raw                accuracy: 0.9306
+naive_bayes_processed          accuracy: 0.9163
+random_forest_raw              accuracy: 0.8732
+decision_tree_raw              accuracy: 0.8541
+random_forest_processed        accuracy: 0.8158
+knn_raw                        accuracy: 0.7967
+decision_tree_processed        accuracy: 0.7751
+perceptron_processed           accuracy: 0.6818
+svc_raw                        accuracy: 0.6507
+svc_processed                  accuracy: 0.6483
+knn_processed                  accuracy: 0.6196
+perceptron_raw                 accuracy: 0.3756
+```

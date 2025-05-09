@@ -1,0 +1,5 @@
+outs:
+- md5: 59bf60b68b481a5171a078c07e241463
+  size: 1431
+  hash: md5
+  path: naive_bayes_processed.pkl

@@ -23,7 +23,7 @@ jobs:
       run: pip install pdm
 
     - name: Install dependencies
-      run: pdm install
+      run: pdm install -G dev
 
     - name: Run linters
       run: |

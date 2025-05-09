@@ -1,0 +1,5 @@
+outs:
+- md5: fe143d8dd1ac6812d3cd088338d9a996
+  size: 38187
+  hash: md5
+  path: svc_raw.pkl
