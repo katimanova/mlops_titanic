@@ -18,12 +18,6 @@ classifiers = [
 ]
 keywords = ["mlops", "titanic", "machine-learning", "pdm"]
 
-[tool.pdm]
-distribution = true
-
-[tool.pdm.venv]
-in-project = true
-
 [dependency-groups]
 dev = [
     "black>=25.1.0",
@@ -34,7 +28,8 @@ dev = [
     "pre-commit>=4.2.0",
     "nbqa>=1.9.1",
     "dvc>=3.59.2",
-    "dvc-gdrive>=3.0.1"
+    "dvc-gdrive>=3.0.1",
+    "pandas-stubs>=2.2.3.250308",
 ]
 
 [build-system]
@@ -43,3 +38,9 @@ build-backend = "pdm.backend"
 
 [tool.black]
 line-length = 100
+
+[tool.pdm]
+distribution = true
+
+[tool.pdm.venv]
+in-project = true
