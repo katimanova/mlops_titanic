@@ -24,8 +24,8 @@ distribution = true
 [tool.pdm.venv]
 in-project = true
 
-[dependency-groups.dev]
-dependencies = [
+[dependency-groups]
+dev = [
     "black>=25.1.0",
     "isort>=6.0.1",
     "flake8>=7.2.0",
