@@ -18,7 +18,7 @@ def load_test_data(dataset_type: str):
         X_test = df.fillna(df.median(numeric_only=True))
     else:
         raise ValueError("Unknown dataset type")
-    
+
     y_true = pd.read_csv(TARGET_PATH)["Survived"]
     return X_test, y_true
 

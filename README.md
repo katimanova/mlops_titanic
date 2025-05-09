@@ -43,7 +43,7 @@ docker run --rm mlops-titanic
 - добавлять данные в репозиторий без хранения их в Git;
 - отслеживать изменения в датасетах;
 - переключаться между версиями;
-- синхронизировать данные с удалённым хранилищем (в нашем случае — [DAGsHub](https://dagshub.com)).
+- синхронизировать данные с удалённым хранилищем (в нашем случае — [DAGsHub](https://dagshub.com/katimanova/mlops_titanic)).
 
 #### Используемые команды
 
@@ -72,4 +72,25 @@ dvc pull
 # Переключение между версиями данных
 git checkout <branch-or-commit>
 dvc checkout
+```
+
+### Сравнение моделей по точности 
+
+Модели обучались как на сырых, так и на предобработанных данных:
+
+```bash
+logistic_regression_raw        accuracy: 0.9833
+logistic_regression_processed  accuracy: 0.9306
+naive_bayes_raw                accuracy: 0.9306
+naive_bayes_processed          accuracy: 0.9163
+random_forest_raw              accuracy: 0.8732
+decision_tree_raw              accuracy: 0.8541
+random_forest_processed        accuracy: 0.8158
+knn_raw                        accuracy: 0.7967
+decision_tree_processed        accuracy: 0.7751
+perceptron_processed           accuracy: 0.6818
+svc_raw                        accuracy: 0.6507
+svc_processed                  accuracy: 0.6483
+knn_processed                  accuracy: 0.6196
+perceptron_raw                 accuracy: 0.3756
 ```
