@@ -6,3 +6,6 @@
     url = https://dagshub.com/katimanova/mlops_titanic.dvc
 ['remote "origin-dags"']
     url = https://dagshub.com/katimanova/mlops_titanic.dvc
+    auth = basic
+    user = katimanova
+    password = bb0e67900f9e5bd7f737e31456f5ba26a610a555
