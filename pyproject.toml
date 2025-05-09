@@ -43,3 +43,5 @@ distribution = true
 
 [tool.pdm.venv]
 in-project = true
+[tool.mypy]
+ignore_missing_imports = true
