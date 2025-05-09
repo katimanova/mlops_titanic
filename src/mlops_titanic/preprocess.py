@@ -22,9 +22,7 @@ def preprocess(df: pd.DataFrame, is_train=True) -> pd.DataFrame:
     df["Age"] = df["Age"].fillna(df["Age"].median())
     df["Fare"] = df["Fare"].fillna(df["Fare"].median())
     df["Embarked"] = df["Embarked"].fillna(df["Embarked"].mode()[0])
-    df["Embarked"] = (
-        df["Embarked"].astype(str).map({"S": 0, "C": 1, "Q": 2}).astype(int)
-    )
+    df["Embarked"] = df["Embarked"].astype(str).map({"S": 0, "C": 1, "Q": 2}).astype(int)
 
     # Новая фича
     df["FamilySize"] = df["SibSp"] + df["Parch"] + 1
