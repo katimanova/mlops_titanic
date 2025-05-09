@@ -29,7 +29,7 @@ def preprocess(df: pd.DataFrame, is_train=True) -> pd.DataFrame:
     # Новая фича
     df["FamilySize"] = df["SibSp"] + df["Parch"] + 1
 
-    # Удалим неиспользуемые признаки
+    # уберем неиспользуемые признаки
     drop_cols = ["Name", "Ticket", "Cabin", "PassengerId"]
     df.drop(
         columns=[col for col in drop_cols if col in df.columns],
