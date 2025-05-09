@@ -1,0 +1,5 @@
+outs:
+- md5: 6fd8a2161da852ee375f31691faa3e13
+  size: 53211
+  hash: md5
+  path: svc_processed.pkl
