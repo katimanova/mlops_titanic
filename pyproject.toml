@@ -2,32 +2,30 @@
 name = "mlops_titanic"
 version = "0.1.0"
 description = "Titanic survival model for MLOps"
-authors = [
-    {name = "Anastasia K.", email = "nkaliman00@mail.ru"},
-]
+authors = [{ name = "Anastasia K.", email = "nkaliman00@mail.ru" }]
 readme = "README.md"
-license = {text = "MIT"}
+license = { text = "MIT" }
 requires-python = ">=3.10"
 dependencies = [
     "pandas>=2.2.3",
     "scikit-learn>=1.6.1",
+    "numpy>=2.2.5"
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
+    "Operating System :: OS Independent"
 ]
 keywords = ["mlops", "titanic", "machine-learning", "pdm"]
-
-
 
 [tool.pdm]
 distribution = true
 
 [tool.pdm.venv]
 in-project = true
-[dependency-groups]
-dev = [
+
+[dependency-groups.dev]
+dependencies = [
     "black>=25.1.0",
     "isort>=6.0.1",
     "flake8>=7.2.0",
@@ -36,9 +34,12 @@ dev = [
     "pre-commit>=4.2.0",
     "nbqa>=1.9.1",
     "dvc>=3.59.2",
-    "dvc-gdrive>=3.0.1",
+    "dvc-gdrive>=3.0.1"
 ]
 
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
+
+[tool.black]
+line-length = 100
