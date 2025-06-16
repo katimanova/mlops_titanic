@@ -1,0 +1,18 @@
+stages:
+  run_pipeline:
+    cmd: docker compose run --rm pipeline
+    deps:
+      - data/raw/train.csv
+      - src/mlops_titanic/
+      - Snakefile
+    outs:
+      - data/processed/test_preprocessed.csv
+      - data/processed/train_preprocessed.csv
+      - models/decision_tree.pkl
+      - models/knn.pkl
+      - models/logistic_regression.pkl
+      - models/random_forest.pkl
+      - models/naive_bayes.pkl
+      - models/perceptron.pkl
+      - models/svc.pkl
+      - results/metrics.txt

@@ -9,26 +9,15 @@ from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB
 from sklearn.tree import DecisionTreeClassifier
 
-RAW_PATH = Path("data/raw/train.csv")
-PROCESSED_PATH = Path("data/processed/train_preprocessed.csv")
-MODEL_PATH = Path("models")
-MODEL_PATH.mkdir(parents=True, exist_ok=True)
+# Пути, полученные из Snakefile
+processed_input = snakemake.input.train_p  # data/processed/train_preprocessed.csv
+output_paths = snakemake.output.models     # список из 14 моделей (processed+raw)
 
+# Убедимся, что директория существует
+Path(output_paths[0]).parent.mkdir(parents=True, exist_ok=True)
 
 def load_processed():
-    df = pd.read_csv(PROCESSED_PATH)
-    X = df.drop("Survived", axis=1)
-    y = df["Survived"]
-    return X, y
-
-
-def load_raw():
-    df = pd.read_csv(RAW_PATH)
-
-    # простая предобработка
-    df = df[["Survived", "Pclass", "Sex", "SibSp", "Parch", "Fare"]].copy()
-    df["Sex"] = df["Sex"].map({"male": 0, "female": 1})
-    df = df.dropna()
+    df = pd.read_csv(processed_input)
     X = df.drop("Survived", axis=1)
     y = df["Survived"]
     return X, y
@@ -44,16 +33,14 @@ MODELS = {
     "perceptron": Perceptron(random_state=42),
 }
 
-
-def train_and_save(model, model_name, dataset_name, X, y):
+def train_and_save(model, output_path, X, y):
     model.fit(X, y)
-    path = MODEL_PATH / f"{model_name}_{dataset_name}.pkl"
-    joblib.dump(model, path)
-    print(f"Saved: {path}")
-
+    joblib.dump(model, output_path)
+    print(f"Saved: {output_path}")
 
 if __name__ == "__main__":
-    for dataset_name, loader in [("processed", load_processed), ("raw", load_raw)]:
-        X, y = loader()
-        for model_name, model in MODELS.items():
-            train_and_save(model, model_name, dataset_name, X, y)
+    X, y = load_processed()
+    for model_name, model in MODELS.items():
+        path = Path(f"models/{model_name}.pkl")
+        if path in [Path(p) for p in output_paths]:
+            train_and_save(model, path, X, y)

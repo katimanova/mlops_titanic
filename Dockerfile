@@ -1,13 +1,31 @@
 FROM python:3.10-slim
 
+# Устанавливаем pdm
 RUN pip install pdm
+
+# Устанавливаем зависимости системы (иначе Snakemake не работает)
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    gcc \
+    libffi-dev \
+    git \
+    curl \
+    && apt-get clean
 
 WORKDIR /app
 
 COPY pyproject.toml pdm.lock ./
+COPY README.md ./
 
-RUN pdm install --no-self --prod
+# Устанавливаем зависимости в .venv
+RUN pdm install
 
-COPY . .
+# Активируем venv вручную
+ENV PDM_IGNORE_SAVED_PYTHON=1
+ENV PATH="/app/.venv/bin:$PATH"
 
-CMD ["pdm", "run", "python", "src/mlops_titanic/train.py"]
+COPY ./src/ ./src/
+COPY ./Snakefile ./Snakefile
+
+# Команда по умолчанию — запуск Snakemake
+CMD ["pdm", "run", "snakemake", "--cores", "1", "-p"]

@@ -1,18 +1,16 @@
 import pandas as pd
 from pathlib import Path
 
-RAW_DIR = Path("data/raw")
-PROCESSED_DIR = Path("data/processed")
-PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+# Доступ к input/output из Snakefile
+train_input = snakemake.input.train      # "data/raw/train.csv"
+test_input = snakemake.input.test        # "data/raw/test.csv"
+train_output = snakemake.output.train_p  # "data/processed/train_preprocessed.csv"
+test_output = snakemake.output.test_p    # "data/processed/test_preprocessed.csv"
 
+# Убедимся, что выходная директория существует
+Path(train_output).parent.mkdir(parents=True, exist_ok=True)
 
-def load_data():
-    train = pd.read_csv(RAW_DIR / "train.csv")
-    test = pd.read_csv(RAW_DIR / "test.csv")
-    return train, test
-
-
-def preprocess(df: pd.DataFrame, is_train=True) -> pd.DataFrame:
+def preprocess(df: pd.DataFrame, is_train: bool=True) -> pd.DataFrame:
     df = df.copy()
 
     # Кодировка пола
@@ -27,29 +25,22 @@ def preprocess(df: pd.DataFrame, is_train=True) -> pd.DataFrame:
     # Новая фича
     df["FamilySize"] = df["SibSp"] + df["Parch"] + 1
 
-    # уберем неиспользуемые признаки
+    # Удалим ненужные колонки
     drop_cols = ["Name", "Ticket", "Cabin", "PassengerId"]
-    df.drop(
-        columns=[col for col in drop_cols if col in df.columns],
-        inplace=True,
-    )
+    df.drop(columns=[col for col in drop_cols if col in df.columns], inplace=True)
 
-    # Если train, удалим NaN из таргета
+    # Удалим NaN из таргета, если train
     if is_train:
         df = df.dropna(subset=["Survived"])
 
     return df
 
-
-def main():
-    train, test = load_data()
-
-    train_processed = preprocess(train, is_train=True)
-    test_processed = preprocess(test, is_train=False)
-
-    train_processed.to_csv(PROCESSED_DIR / "train_preprocessed.csv", index=False)
-    test_processed.to_csv(PROCESSED_DIR / "test_preprocessed.csv", index=False)
-
-
 if __name__ == "__main__":
-    main()
+    train_df = pd.read_csv(train_input)
+    test_df = pd.read_csv(test_input)
+
+    train_processed = preprocess(train_df, is_train=True)
+    test_processed = preprocess(test_df, is_train=False)
+
+    train_processed.to_csv(train_output, index=False)
+    test_processed.to_csv(test_output, index=False)

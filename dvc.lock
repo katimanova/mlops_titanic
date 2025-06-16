@@ -1,0 +1,59 @@
+schema: '2.0'
+stages:
+  run_pipeline:
+    cmd: docker compose run --rm pipeline
+    deps:
+    - path: Snakefile
+      hash: md5
+      md5: 92b90aba22e79398efbcdc9719fcf84c
+      size: 1115
+    - path: data/raw/train.csv
+      hash: md5
+      md5: 2309cc5f04782ed9bb6016d9f4e381cf
+      size: 61194
+    - path: src/mlops_titanic/
+      hash: md5
+      md5: d1d2fffd4e32e5f77b231446fa4da9db.dir
+      size: 4668
+      nfiles: 4
+    outs:
+    - path: data/processed/test_preprocessed.csv
+      hash: md5
+      md5: cf3afb7d48b1f8e50fab2ca41cd950e9
+      size: 9735
+    - path: data/processed/train_preprocessed.csv
+      hash: md5
+      md5: f595f2b50928044a9051d21ebfa29c16
+      size: 22391
+    - path: models/decision_tree.pkl
+      hash: md5
+      md5: 9b8011493c77d73ecf19463a9827d227
+      size: 34505
+    - path: models/knn.pkl
+      hash: md5
+      md5: c2ad96ca890d12be7b4df16936da097f
+      size: 135030
+    - path: models/logistic_regression.pkl
+      hash: md5
+      md5: 4e2f2133af5cab02670bfe4643728b0e
+      size: 1247
+    - path: models/naive_bayes.pkl
+      hash: md5
+      md5: e3e15f46da982edeccea48ef395601c6
+      size: 1351
+    - path: models/perceptron.pkl
+      hash: md5
+      md5: 1419857b12cd215570a2372a105c26ba
+      size: 1485
+    - path: models/random_forest.pkl
+      hash: md5
+      md5: 83700772c5a87ed6a31e58028458d21a
+      size: 2977929
+    - path: models/svc.pkl
+      hash: md5
+      md5: 1d5b54dc620f421bedc75654d87309d4
+      size: 53131
+    - path: results/metrics.txt
+      hash: md5
+      md5: 46943e285c832ea02c215e4ddbbd1c85
+      size: 354

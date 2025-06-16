@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  pipeline:
+    build: .
+    working_dir: /app
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./results:/app/results
