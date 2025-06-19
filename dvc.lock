@@ -13,8 +13,8 @@ stages:
       size: 61194
     - path: src/mlops_titanic/
       hash: md5
-      md5: d1d2fffd4e32e5f77b231446fa4da9db.dir
-      size: 4668
+      md5: 9acf8785bc330699cf9e26828c529104.dir
+      size: 5443
       nfiles: 4
     outs:
     - path: data/processed/test_preprocessed.csv
