@@ -94,8 +94,6 @@ mlflow ui
 
 ##### Отчет
 
-
-
 | Эксперимент | Изменения параметров моделей                                          |
 |-------------|----------------------------------------------------------------------------------|
 | № 1     | Базовые значения моделей |
@@ -123,10 +121,50 @@ mlflow ui
 
 
 ### API
-#### Оценка качества и скорости работы API
+В проекте используется FastAPI для развертывания сервиса предсказаний модели на датасете Титаника.
+1. Установите зависимости:
+```bash
+pdm add fastapi uvicorn joblib
+```
+2. Запустите API-сервер:
+```bash
+pdm run uvicorn api.main:app --reload
+```
 
-| Модель                 | Accuracy | Среднее время отклика (сек) |
+3. Перейдите по адресу:
+- Приложение: http://127.0.0.1:8000
+- Swagger: http://127.0.0.1:8000/docs
+
+
+> Используемая модель указывается в `config.yaml`
+
+##### Docker & Docker Compose
+Сервис может быть развернут в контейнере. При запуске:
+```bash
+docker compose -f docker-compose-api.yml up --build
+```
+Модели автоматически подтягиваются из DVC, благодаря конфигурации:
+```yaml
+command: >
+  bash -c "
+    dvc remote modify origin-dags user katimanova &&
+    dvc remote modify origin-dags password \$DVC_PASSWORD &&
+    pdm run dvc pull models/decision_tree.pkl &&
+    pdm run uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+  "
+```
+##### Оценка качества и скорости работы API
+
+Для оценки используется скрипт api/send_requests.py:
+
+```bash
+pdm run python api/send_requests.py 
+```
+Эксперементные запуски на разных моделях:
+| Модель                 | Accuracy | Время отклика (сек) |
 |------------------------|----------|-----------------------------|
 | `random_forest`             | 0.8158   | 0.008                      |
+| `decision_tree`             | 0.7751   | 0.008                      |
+| `knn`                       | 0.6292   | 0.005                      |
 
 > Замер проводился на тестовой выборке `test.csv`, ответы брались из `gender_submission.csv`. Каждый запрос отправлялся через FastAPI.

@@ -18,14 +18,14 @@ class Passenger(BaseModel):
     PassengerId: int
     Pclass: int
     Name: str
-    Sex: str
+    Sex: str='male'
     Age: float
     SibSp: int
     Parch: int
     Ticket: str
     Fare: float
     Cabin: str
-    Embarked: str
+    Embarked: str='S'
 
 app = FastAPI()
 

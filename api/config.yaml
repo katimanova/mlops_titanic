@@ -1,2 +1,2 @@
-model_name: "random_forest"
-model_path: "models/random_forest.pkl"
+model_name: "knn"
+model_path: "models/knn.pkl"
