@@ -1,5 +1,0 @@
-outs:
-- md5: 425cfd30d8a59b3d2f3e23522a1476b4
-  size: 135110
-  hash: md5
-  path: knn_processed.pkl

@@ -1,5 +1,0 @@
-outs:
-- md5: f4c0dcb967043afb95967d944cf38a81
-  size: 1288
-  hash: md5
-  path: naive_bayes_raw.pkl

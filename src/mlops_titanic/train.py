@@ -9,11 +9,21 @@ from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB
 from sklearn.tree import DecisionTreeClassifier
 
-# Пути, полученные из Snakefile
-processed_input = snakemake.input.train_p  # data/processed/train_preprocessed.csv
-output_paths = snakemake.output.models     # список из 14 моделей (processed+raw)
+import mlflow
+mlflow.set_tracking_uri("mlruns")
+mlflow.set_experiment("TitanicModels")
 
-# Убедимся, что директория существует
+try:
+    # При запуске через Snakemake
+    processed_input = snakemake.input.train_p
+    output_paths = snakemake.output.models
+except NameError:
+    # При ручном запуске
+    processed_input = "data/processed/train_preprocessed.csv"
+    output_paths = [f"models/{name}.pkl" for name in [
+        "logistic_regression", "knn", "svc", "naive_bayes", "decision_tree", "random_forest", "perceptron"
+    ]]
+
 Path(output_paths[0]).parent.mkdir(parents=True, exist_ok=True)
 
 def load_processed():
@@ -21,7 +31,6 @@ def load_processed():
     X = df.drop("Survived", axis=1)
     y = df["Survived"]
     return X, y
-
 
 MODELS = {
     "logistic_regression": LogisticRegression(max_iter=1000, random_state=42),
@@ -33,14 +42,26 @@ MODELS = {
     "perceptron": Perceptron(random_state=42),
 }
 
-def train_and_save(model, output_path, X, y):
-    model.fit(X, y)
-    joblib.dump(model, output_path)
-    print(f"Saved: {output_path}")
-
 if __name__ == "__main__":
     X, y = load_processed()
     for model_name, model in MODELS.items():
         path = Path(f"models/{model_name}.pkl")
         if path in [Path(p) for p in output_paths]:
-            train_and_save(model, path, X, y)
+            with mlflow.start_run(run_name=model_name):
+                # Логируем параметры
+                mlflow.log_param("model_name", model_name)
+                mlflow.log_param("n_features", X.shape[1])
+                mlflow.log_param("n_samples", X.shape[0])
+
+                # Обучение
+                model.fit(X, y)
+                joblib.dump(model, path)
+
+                # Логируем точность на трейне
+                acc = model.score(X, y)
+                mlflow.log_metric("train_accuracy", acc)
+
+                # Логируем модель как артефакт
+                mlflow.log_artifact(path)
+
+                print(f"Saved and logged: {model_name}")

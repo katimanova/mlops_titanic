@@ -74,38 +74,6 @@ git checkout <branch-or-commit>
 dvc checkout
 ```
 
-### Snakemake MLOps Pipeline
-Установка зависимостей через PDM
-```bash
-pdm add snakemake -v
-```
-Структура пайплайна Snakefile:
-1.	preprocess – предобработка train.csv и test.csv
-2.	train – обучение моделей (Logistic Regression, KNN, SVC, Naive Bayes, Decision Tree, Random Forest, Perceptron)
-3.	evaluate – генерация файла results/metrics.txt с метриками
-
-Запуск:
-- Локально:
-```bash
-pdm run snakemake --cores 1 -p --forceall
-```
-
-- в Docker:
-```bash
-docker compose up --build --remove-orphans
-```
-- Snakemake + Docker + DVC:
-
-```bash
-pdm run dvc repro
-```
-> Каждый шаг интегрирован с системой версионирования данных (для автоматического воспроизведения пайплайна)
-
-Результаты загружаются в [Dagshub репозиторий](https://dagshub.com/katimanova/mlops_titanic) командой:
-```bash
-git push dags feature/snakemake
-```
-
 ### Сравнение моделей по точности 
 
 Модели обучались как на сырых, так и на предобработанных данных:

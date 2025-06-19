@@ -1,0 +1,14 @@
+artifact_uri: /Users/anastasia/docs/ITMO/mlops_titanic/mlruns/306246926076022699/93e7f2fb9565475381aa4cf68b4205c9/artifacts
+end_time: 1750337386646
+entry_point_name: ''
+experiment_id: '306246926076022699'
+lifecycle_stage: active
+run_id: 93e7f2fb9565475381aa4cf68b4205c9
+run_name: logistic_regression
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750337386618
+status: 3
+tags: []
+user_id: anastasia

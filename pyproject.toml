@@ -11,7 +11,8 @@ dependencies = [
     "scikit-learn>=1.6.1",
     "numpy>=2.2.5",
     "pulp<2.7",
-    "snakemake>=7.32.4"
+    "snakemake>=7.32.4",
+    "mlflow>=3.1.0"
 ]
 classifiers = [
     "Programming Language :: Python :: 3",

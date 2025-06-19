@@ -1,5 +1,0 @@
-outs:
-- md5: 1afb5d0b857d732558451fcb7ea2f205
-  size: 1549
-  hash: md5
-  path: perceptron_processed.pkl
