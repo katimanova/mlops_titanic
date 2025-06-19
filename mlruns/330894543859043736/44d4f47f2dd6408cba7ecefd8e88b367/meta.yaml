@@ -1,0 +1,14 @@
+artifact_uri: /Users/anastasia/docs/ITMO/mlops_titanic/mlruns/330894543859043736/44d4f47f2dd6408cba7ecefd8e88b367/artifacts
+end_time: 1750338958935
+entry_point_name: ''
+experiment_id: '330894543859043736'
+lifecycle_stage: active
+run_id: 44d4f47f2dd6408cba7ecefd8e88b367
+run_name: perceptron_exp2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750338958923
+status: 3
+tags: []
+user_id: anastasia

@@ -1,0 +1,14 @@
+artifact_uri: /Users/anastasia/docs/ITMO/mlops_titanic/mlruns/330894543859043736/aac453485a8d485481c75473201903a9/artifacts
+end_time: 1750338958748
+entry_point_name: ''
+experiment_id: '330894543859043736'
+lifecycle_stage: active
+run_id: aac453485a8d485481c75473201903a9
+run_name: naive_bayes_exp2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750338958737
+status: 3
+tags: []
+user_id: anastasia

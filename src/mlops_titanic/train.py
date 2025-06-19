@@ -33,13 +33,13 @@ def load_processed():
     return X, y
 
 MODELS = {
-    "logistic_regression": LogisticRegression(max_iter=1000, random_state=42),
-    "knn": KNeighborsClassifier(),
-    "svc": SVC(probability=True, random_state=42),
-    "naive_bayes": GaussianNB(),
-    "decision_tree": DecisionTreeClassifier(random_state=42),
-    "random_forest": RandomForestClassifier(n_estimators=100, random_state=42),
-    "perceptron": Perceptron(random_state=42),
+    "logistic_regression": LogisticRegression(C=0.5, max_iter=200, random_state=42),
+    "knn": KNeighborsClassifier(n_neighbors=7),
+    "svc": SVC(C=2.0, kernel='rbf', probability=True, random_state=42),
+    "naive_bayes": GaussianNB(var_smoothing=1e-8),
+    "decision_tree": DecisionTreeClassifier(max_depth=3, random_state=42),
+    "random_forest": RandomForestClassifier(n_estimators=200, max_depth=5, random_state=42),
+    "perceptron": Perceptron(penalty='l2', alpha=0.01, random_state=42),
 }
 
 if __name__ == "__main__":
@@ -47,9 +47,10 @@ if __name__ == "__main__":
     for model_name, model in MODELS.items():
         path = Path(f"models/{model_name}.pkl")
         if path in [Path(p) for p in output_paths]:
-            with mlflow.start_run(run_name=model_name):
+            with mlflow.start_run(run_name=f"{model_name}_exp3"):
                 # Логируем параметры
                 mlflow.log_param("model_name", model_name)
+                mlflow.log_param("model_params", str(model.get_params()))
                 mlflow.log_param("n_features", X.shape[1])
                 mlflow.log_param("n_samples", X.shape[0])
 

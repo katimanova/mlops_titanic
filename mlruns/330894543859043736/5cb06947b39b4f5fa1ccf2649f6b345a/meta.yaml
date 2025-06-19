@@ -1,0 +1,14 @@
+artifact_uri: /Users/anastasia/docs/ITMO/mlops_titanic/mlruns/330894543859043736/5cb06947b39b4f5fa1ccf2649f6b345a/artifacts
+end_time: 1750338859279
+entry_point_name: ''
+experiment_id: '330894543859043736'
+lifecycle_stage: active
+run_id: 5cb06947b39b4f5fa1ccf2649f6b345a
+run_name: knn
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750338859256
+status: 3
+tags: []
+user_id: anastasia
