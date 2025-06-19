@@ -74,23 +74,49 @@ git checkout <branch-or-commit>
 dvc checkout
 ```
 
-### Сравнение моделей по точности 
+### MLflow 
 
-Модели обучались как на сырых, так и на предобработанных данных:
-
+Установка:
 ```bash
-logistic_regression_raw        accuracy: 0.9833
-logistic_regression_processed  accuracy: 0.9306
-naive_bayes_raw                accuracy: 0.9306
-naive_bayes_processed          accuracy: 0.9163
-random_forest_raw              accuracy: 0.8732
-decision_tree_raw              accuracy: 0.8541
-random_forest_processed        accuracy: 0.8158
-knn_raw                        accuracy: 0.7967
-decision_tree_processed        accuracy: 0.7751
-perceptron_processed           accuracy: 0.6818
-svc_raw                        accuracy: 0.6507
-svc_processed                  accuracy: 0.6483
-knn_processed                  accuracy: 0.6196
-perceptron_raw                 accuracy: 0.3756
+pdm add mlflow
 ```
+Контроль через DVC после каждого эксперимента
+```bash
+pdm run dvc repro
+dvc push
+```
+
+Запуск локального MLflow UI:
+```bash
+mlflow ui
+```
+> весь UI был локально по адресу http://127.0.0.1:5000
+
+##### Отчет
+
+
+
+| Эксперимент | Изменения параметров моделей                                          |
+|-------------|----------------------------------------------------------------------------------|
+| № 1     | Базовые значения моделей |
+| № 2     | Усложнённые параметры (например, `n_neighbors=7`, `C=2.0`, `max_depth=5`)        |
+| № 3     | Альтернативные параметры (`kernel="poly"`, `penalty="elasticnet"`)       |
+
+
+###### Сравнение моделей по `train_accuracy` топ 10
+
+| Модель                       | Точность (`train_accuracy`) |
+|-----------------------------|------------------------------|
+| `knn_exp3`                  | **0.9798**                   |
+| `random_forest`             | **0.9798**                   |
+| `decision_tree`             | **0.9798**                   |
+| `random_forest_exp3`        | 0.9214                       |
+| `decision_tree_exp3`        | 0.9091                       |
+| `random_forest_exp2`        | 0.8507                       |
+| `decision_tree_exp2`        | 0.8272                       |
+| `logistic_regression_exp2`  | 0.8047                       |
+| `knn`                       | 0.8013                       |
+| `logistic_regression`       | 0.8013                       |
+
+Как выглядит UI:
+![MLflow demo](report/mlflow.gif)
