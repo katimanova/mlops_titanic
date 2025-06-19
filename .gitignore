@@ -136,6 +136,10 @@ ENV/
 env.bak/
 venv.bak/
 
+# Ignore MLflow and Snakemake cache
+mlruns/
+.snakemake/
+
 # Spyder project settings
 .spyderproject
 .spyproject
