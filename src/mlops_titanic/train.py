@@ -33,13 +33,13 @@ def load_processed():
     return X, y
 
 MODELS = {
-    "logistic_regression": LogisticRegression(C=0.5, max_iter=200, random_state=42),
-    "knn": KNeighborsClassifier(n_neighbors=7),
-    "svc": SVC(C=2.0, kernel='rbf', probability=True, random_state=42),
-    "naive_bayes": GaussianNB(var_smoothing=1e-8),
-    "decision_tree": DecisionTreeClassifier(max_depth=3, random_state=42),
-    "random_forest": RandomForestClassifier(n_estimators=200, max_depth=5, random_state=42),
-    "perceptron": Perceptron(penalty='l2', alpha=0.01, random_state=42),
+    "logistic_regression": LogisticRegression(C=10.0, solver='liblinear', max_iter=300, random_state=42),
+    "knn": KNeighborsClassifier(n_neighbors=3, weights='distance'),
+    "svc": SVC(C=1.0, kernel='poly', degree=3, probability=True, random_state=42),
+    "naive_bayes": GaussianNB(var_smoothing=1e-9),
+    "decision_tree": DecisionTreeClassifier(max_depth=10, min_samples_split=5, random_state=42),
+    "random_forest": RandomForestClassifier(n_estimators=50, max_depth=10, min_samples_split=4, random_state=42),
+    "perceptron": Perceptron(penalty='elasticnet', alpha=0.001, l1_ratio=0.15, random_state=42),
 }
 
 if __name__ == "__main__":

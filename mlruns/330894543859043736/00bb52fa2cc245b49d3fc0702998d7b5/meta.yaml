@@ -1,0 +1,14 @@
+artifact_uri: /Users/anastasia/docs/ITMO/mlops_titanic/mlruns/330894543859043736/00bb52fa2cc245b49d3fc0702998d7b5/artifacts
+end_time: 1750339192117
+entry_point_name: ''
+experiment_id: '330894543859043736'
+lifecycle_stage: active
+run_id: 00bb52fa2cc245b49d3fc0702998d7b5
+run_name: random_forest_exp3
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750339192056
+status: 3
+tags: []
+user_id: anastasia
